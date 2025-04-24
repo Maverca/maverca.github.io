@@ -64,6 +64,17 @@
         .section-img { height: 200px; width: 100%; max-width: 300px; }
         .trust-img { height: 100px; width: 100%; max-width: 150px; }
         .flag-img { width: 20px; height: 20px; vertical-align: middle; margin-right: 5px; }
+        .intro-paragraph { font-size: 1.25rem; line-height: 1.75rem; }
+        .intro-img { height: 300px; width: 100%; max-width: 600px; margin: 1rem auto; }
+        .offer-img { 
+            height: 150px; 
+            width: 100%; 
+            max-width: 200px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            margin-bottom: 1rem; 
+        }
+        .offer-item { text-align: center; }
     </style>
 </head>
 <body>
@@ -84,17 +95,16 @@
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <!-- Who We Are -->
         <section id="who-we-are" class="mb-12">
-            <h2 class="text-2xl font-semibold mb-4 english">Who We Are</h2>
-            <h2 class="text-2xl font-semibold mb-4 french">À Propos</h2>
-            <p class="english">Maverca Solutions is a premier development team specializing in real-time 3D sports technology. With a proven track record behind Wahoo RGT cycling simulation, multiple game console hits, and decades of expertise in 3D gaming, sports simulation, and scalable applications, we deliver industry-leading solutions. Our battle-tested team is available to bring your project to life with unmatched quality, speed, and multi-platform support.</p>
-            <p class="french">Maverca Solutions est une équipe de développement de premier plan spécialisée dans la technologie sportive 3D en temps réel. Avec un historique éprouvé derrière la simulation de cyclisme Wahoo RGT, plusieurs succès sur consoles de jeux, et des décennies d'expertise dans les jeux 3D, la simulation sportive et les applications évolutives, nous fournissons des solutions de pointe. Notre équipe aguerrie est disponible pour donner vie à votre projet avec une qualité, une rapidité et un support multiplateforme inégalés.</p>
+            <p class="english intro-paragraph">Maverca Solutions is a premier development team specializing in real-time 3D sports technology. With a proven track record behind Wahoo RGT cycling simulation, multiple game console hits, and decades of expertise in 3D gaming, sports simulation, and scalable applications, we deliver industry-leading solutions. Our battle-tested team is available to bring your project to life with unmatched quality, speed, and multi-platform support.</p>
+            <p class="french intro-paragraph">Maverca Solutions est une équipe de développement de premier plan spécialisée dans la technologie sportive 3D en temps réel. Avec un historique éprouvé derrière la simulation de cyclisme Wahoo RGT, plusieurs succès sur consoles de jeux, et des décennies d'expertise dans les jeux 3D, la simulation sportive et les applications évolutives, nous fournissons des solutions de pointe. Notre équipe aguerrie est disponible pour donner vie à votre projet avec une qualité, une rapidité et un support multiplateforme inégalés.</p>
+            <div class="intro-img placeholder-img">Intro Image</div>
         </section>
 
         <!-- What We Offer -->
         <section id="what-we-offer" class="mb-12">
             <h2 class="text-2xl font-semibold mb-4 english">What We Offer</h2>
             <h2 class="text-2xl font-semibold mb-4 french">Nos Compétences</h2>
-            <div class="flex flex-col md:flex-row gap-6">
+            <div class="flex flex-col md:flex-row gap-6 mb-6">
                 <div class="section-img placeholder-img">What We Offer Image</div>
                 <div>
                     <p class="english">We can develop your project in record time, ensuring top-tier quality and robust solutions for large-scale user bases across multiple platforms. Our services include:</p>
@@ -107,6 +117,23 @@
                         <li class="english">Development of games, training software, or demo products to showcase hardware</li>
                         <li class="french">Développement de jeux, de logiciels de formation ou de produits de démonstration pour mettre en valeur le matériel</li>
                     </ul>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="offer-item">
+                    <div class="offer-img placeholder-img">Design</div>
+                    <p class="english">Our expertise in user experience (UX) design ensures intuitive and engaging interfaces. We collaborate closely with clients to craft the best user experience, leveraging decades of design experience to create visually stunning and functional solutions.</p>
+                    <p class="french">Notre expertise en conception d'expérience utilisateur (UX) garantit des interfaces intuitives et engageantes. Nous collaborons étroitement avec nos clients pour créer la meilleure expérience utilisateur, en tirant parti de décennies d'expérience en design pour offrir des solutions visuellement époustouflantes et fonctionnelles.</p>
+                </div>
+                <div class="offer-item">
+                    <div class="offer-img placeholder-img">3D</div>
+                    <p class="english">We harness the power of cutting-edge game engines and the latest 3D technologies to deliver immersive, real-time environments. Our team excels in creating high-fidelity visuals and seamless interactions for games and simulations.</p>
+                    <p class="french">Nous exploitons la puissance des moteurs de jeu de pointe et des dernières technologies 3D pour offrir des environnements immersifs en temps réel. Notre équipe excelle dans la création de visuels haute fidélité et d'interactions fluides pour les jeux et les simulations.</p>
+                </div>
+                <div class="offer-item">
+                    <div class="offer-img placeholder-img">Hardware</div>
+                    <p class="english">Our solutions seamlessly integrate with hardware through technologies like Bluetooth and ANT+. We specialize in creating synergistic systems that enhance performance, ensuring robust connectivity and compatibility across devices.</p>
+                    <p class="french">Nos solutions s'intègrent parfaitement au matériel grâce à des technologies comme Bluetooth et ANT+. Nous nous spécialisons dans la création de systèmes synergiques qui améliorent les performances, garantissant une connectivité robuste et une compatibilité entre les appareils.</p>
                 </div>
             </div>
         </section>
