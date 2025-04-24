@@ -74,7 +74,6 @@
             margin-bottom: 1rem; 
         }
         .offer-item { text-align: center; }
-        /* Team Section Styles */
         .team-container { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
@@ -111,12 +110,48 @@
             line-height: 1.5; 
             margin: 0; 
         }
+
+        /* Animation Styles */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+        }
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .slide-in-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .slide-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
     <header class="shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <div class="logo-placeholder placeholder-img">Maverca Solutions Logo</div>
+            <div class="logo-placeholder placeholder-img fade-in">Maverca Solutions Logo</div>
             <div class="language-selector">
                 <button id="lang-en" class="px-2 active-lang" onclick="switchLanguage('en')">
                     <img src="https://via.placeholder.com/20x20?text=UK" alt="UK Flag" class="flag-img"> English
@@ -130,14 +165,14 @@
 
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <!-- Who We Are -->
-        <section id="who-we-are" class="mb-12">
+        <section id="who-we-are" class="mb-12 fade-in">
             <p class="english intro-paragraph">Maverca Solutions is a premier development team specializing in real-time 3D sports technology. With a proven track record behind Wahoo RGT cycling simulation, multiple game console hits, and decades of expertise in 3D gaming, sports simulation, and scalable applications, we deliver industry-leading solutions. Our battle-tested team is available to bring your project to life with unmatched quality, speed, and multi-platform support.</p>
             <p class="french intro-paragraph">Maverca Solutions est une équipe de développement de premier plan spécialisée dans la technologie sportive 3D en temps réel. Avec un historique éprouvé derrière la simulation de cyclisme Wahoo RGT, plusieurs succès sur consoles de jeux, et des décennies d'expertise dans les jeux 3D, la simulation sportive et les applications évolutives, nous fournissons des solutions de pointe. Notre équipe aguerrie est disponible pour donner vie à votre projet avec une qualité, une rapidité et un support multiplateforme inégalés.</p>
-            <div class="intro-img placeholder-img">Intro Image</div>
+            <div class="intro-img placeholder-img slide-in-right">Intro Image</div>
         </section>
 
         <!-- What We Offer -->
-        <section id="what-we-offer" class="mb-12">
+        <section id="what-we-offer" class="mb-12 fade-in">
             <div class="mb-6">
                 <p class="english intro-paragraph">We can develop your project in record time, ensuring top-tier quality and robust solutions for large-scale user bases across multiple platforms. Our services include:</p>
                 <p class="french intro-paragraph">Nous pouvons développer votre projet en un temps record, garantissant une qualité de premier ordre et des solutions robustes pour des bases d'utilisateurs à grande échelle sur plusieurs plateformes. Nos services incluent :</p>
@@ -151,17 +186,17 @@
                 </ul>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="offer-item">
+                <div class="offer-item slide-in-left">
                     <div class="offer-img placeholder-img">Design</div>
                     <p class="english">Our expertise in user experience (UX) design ensures intuitive and engaging interfaces. We collaborate closely with clients to craft the best user experience, leveraging decades of design experience to create visually stunning and functional solutions.</p>
                     <p class="french">Notre expertise en conception d'expérience utilisateur (UX) garantit des interfaces intuitives et engageantes. Nous collaborons étroitement avec nos clients pour créer la meilleure expérience utilisateur, en tirant parti de décennies d'expérience en design pour offrir des solutions visuellement époustouflantes et fonctionnelles.</p>
                 </div>
-                <div class="offer-item">
+                <div class="offer-item slide-in-up">
                     <div class="offer-img placeholder-img">3D</div>
                     <p class="english">We harness the power of cutting-edge game engines and the latest 3D technologies to deliver immersive, real-time environments. Our team excels in creating high-fidelity visuals and seamless interactions for games and simulations.</p>
                     <p class="french">Nous exploitons la puissance des moteurs de jeu de pointe et des dernières technologies 3D pour offrir des environnements immersifs en temps réel. Notre équipe excelle dans la création de visuels haute fidélité et d'interactions fluides pour les jeux et les simulations.</p>
                 </div>
-                <div class="offer-item">
+                <div class="offer-item slide-in-right">
                     <div class="offer-img placeholder-img">Hardware</div>
                     <p class="english">Our solutions seamlessly integrate with hardware through technologies like Bluetooth and ANT+. We specialize in creating synergistic systems that enhance performance, ensuring robust connectivity and compatibility across devices.</p>
                     <p class="french">Nos solutions s'intègrent parfaitement au matériel grâce à des technologies comme Bluetooth et ANT+. Nous nous spécialisons dans la création de systèmes synergiques qui améliorent les performances, garantissant une connectivité robuste et une compatibilité entre les appareils.</p>
@@ -170,21 +205,21 @@
         </section>
 
         <!-- Our Team -->
-        <section id="our-team" class="mb-12">
+        <section id="our-team" class="mb-12 fade-in">
             <h2 class="text-2xl font-semibold mb-4 english">Our Team</h2>
             <h2 class="text-2xl font-semibold mb-4 french">Notre Équipe</h2>
             <p class="english">Meet the experts behind Maverca Solutions:</p>
             <p class="french">Rencontrez les experts derrière Maverca Solutions :</p>
             <div class="team-container">
                 <!-- Matthieu Mauduit -->
-                <div class="team-member english">
+                <div class="team-member english slide-in-left">
                     <div class="team-header">
                         <img src="images/matt.png" alt="Team Image" class="team-img">
                         <h3 class="team-name">Matthieu Mauduit</h3>
                     </div>
                     <p class="team-description">24 years in video game development, UX Lead for Wahoo RGT, and CTO of MCL Sports’ virtual endurance sports broadcasting and tracking platform.</p>
                 </div>
-                <div class="team-member french">
+                <div class="team-member french slide-in-left">
                     <div class="team-header">
                         <img src="images/matt.png" alt="Team Image" class="team-img">
                         <h3 class="team-name">Matthieu Mauduit</h3>
@@ -192,14 +227,14 @@
                     <p class="team-description">24 ans dans le développement de jeux vidéo, responsable UX pour Wahoo RGT, et CTO de la plateforme de diffusion et de suivi des sports d'endurance virtuels de MCL Sports.</p>
                 </div>
                 <!-- Claude Verstraeten -->
-                <div class="team-member english">
+                <div class="team-member english slide-in-right">
                     <div class="team-header">
                         <img src="images/claude.png" alt="Team Image" class="team-img">
                         <h3 class="team-name">Claude Verstraeten</h3>
                     </div>
                     <p class="team-description">Head of Software Development, previously managed a highly successful 30-person video game studio working with Ubisoft and Electronic Arts.</p>
                 </div>
-                <div class="team-member french">
+                <div class="team-member french slide-in-right">
                     <div class="team-header">
                         <img src="images/claude.png" alt="Team Image" class="team-img">
                         <h3 class="team-name">Claude Verstraeten</h3>
@@ -207,14 +242,14 @@
                     <p class="team-description">Responsable du développement logiciel, a précédemment dirigé un studio de jeux vidéo de 30 personnes très performant travaillant avec Ubisoft et Electronic Arts.</p>
                 </div>
                 <!-- Radu Graur -->
-                <div class="team-member english">
+                <div class="team-member english slide-in-left">
                     <div class="team-header">
                         <img src="images/radu.png" alt="Team Image" class="team-img">
                         <h3 class="team-name">Radu Graur</h3>
                     </div>
                     <p class="team-description">Backend, API, and server specialist; founder of Wahoo RGT.</p>
                 </div>
-                <div class="team-member french">
+                <div class="team-member french slide-in-left">
                     <div class="team-header">
                         <img src="images/radu.png" alt="Team Image" class="team-img">
                         <h3 class="team-name">Radu Graur</h3>
@@ -222,14 +257,14 @@
                     <p class="team-description">Spécialiste backend, API et serveur ; fondateur de Wahoo RGT.</p>
                 </div>
                 <!-- Lionel Caillaud -->
-                <div class="team-member english">
+                <div class="team-member english slide-in-right">
                     <div class="team-header">
                         <img src="images/lionel.png" alt="Team Image" class="team-img">
                         <h3 class="team-name">Lionel Caillaud</h3>
                     </div>
                     <p class="team-description">2D/3D artist specializing in art direction, environments, character models, and animations.</p>
                 </div>
-                <div class="team-member french">
+                <div class="team-member french slide-in-right">
                     <div class="team-header">
                         <img src="images/lionel.png" alt="Team Image" class="team-img">
                         <h3 class="team-name">Lionel Caillaud</h3>
@@ -237,14 +272,14 @@
                     <p class="team-description">Artiste 2D/3D spécialisé dans la direction artistique, les environnements, les modèles de personnages et les animations.</p>
                 </div>
                 <!-- Mike Stratulat -->
-                <div class="team-member english">
+                <div class="team-member english slide-in-left">
                     <div class="team-header">
                         <img src="images/mike.png" alt="Team Image" class="team-img">
                         <h3 class="team-name">Mike Stratulat</h3>
                     </div>
                     <p class="team-description">Lead Tester and Customer Support for Wahoo RGT.</p>
                 </div>
-                <div class="team-member french">
+                <div class="team-member french slide-in-left">
                     <div class="team-header">
                         <img src="images/mike.png" alt="Team Image" class="team-img">
                         <h3 class="team-name">Mike Stratulat</h3>
@@ -255,40 +290,40 @@
         </section>
 
         <!-- They Trust Us -->
-        <section id="they-trust-us" class="mb-12">
+        <section id="they-trust-us" class="mb-12 fade-in">
             <h2 class="text-2xl font-semibold mb-4 english">They Trust Us</h2>
             <h2 class="text-2xl font-semibold mb-4 french">Ils Nous Font Confiance</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="trust-img placeholder-img">Wahoo</div>
-                <div class="trust-img placeholder-img">Ubisoft</div>
-                <div class="trust-img placeholder-img">Electronic Arts</div>
-                <div class="trust-img placeholder-img">Nintendo Germany</div>
-                <div class="trust-img placeholder-img">Enjoy Gaming Ltd</div>
-                <div class="trust-img placeholder-img">Placeholder X</div>
-                <div class="trust-img placeholder-img">Placeholder X</div>
-                <div class="trust-img placeholder-img">Placeholder X</div>
-                <div class="trust-img placeholder-img">Placeholder X</div>
-                <div class="trust-img placeholder-img">Placeholder X</div>
-                <div class="trust-img placeholder-img">Placeholder X</div>
-                <div class="trust-img placeholder-img">Placeholder X</div>
+                <div class="trust-img placeholder-img slide-in-up">Wahoo</div>
+                <div class="trust-img placeholder-img slide-in-up">Ubisoft</div>
+                <div class="trust-img placeholder-img slide-in-up">Electronic Arts</div>
+                <div class="trust-img placeholder-img slide-in-up">Nintendo Germany</div>
+                <div class="trust-img placeholder-img slide-in-up">Enjoy Gaming Ltd</div>
+                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
+                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
+                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
+                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
+                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
+                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
+                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
             </div>
         </section>
 
         <!-- Showreel -->
-        <section id="showreel" class="mb-12">
+        <section id="showreel" class="mb-12 fade-in">
             <h2 class="text-2xl font-semibold mb-4 english">Showreel</h2>
             <h2 class="text-2xl font-semibold mb-4 french">Showreel</h2>
             <div class="flex flex-col md:flex-row gap-6">
-                <div class="section-img placeholder-img">Showreel Image</div>
-                <div>
+                <div class="section-img placeholder-img slide-in-left">Showreel Image</div>
+                <div class="slide-in-right">
                     <p class="english">[Insert link to latest production or portfolio here]</p>
                     <p class="french">[Insérez le lien vers la dernière production ou le portfolio ici]</p>
                 </div>
             </div>
-        </section>
+        </section>.
 
         <!-- Hire Us -->
-        <section id="hire-us" class="mb-12">
+        <section id="hire-us" class="mb-12 fade-in">
             <h2 class="text-2xl font-semibold mb-4 english">Hire Us</h2>
             <h2 class="text-2xl font-semibold mb-4 french">Engagez-Nous</h2>
             <p class="english">Maverca Solutions is available to transform your vision into reality. Let us build your next groundbreaking project with speed, precision, and excellence.</p>
@@ -296,7 +331,7 @@
         </section>
 
         <!-- Contact Us -->
-        <section id="contact-us">
+        <section id="contact-us" class="fade-in">
             <h2 class="text-2xl font-semibold mb-4 english">Contact Us</h2>
             <h2 class="text-2xl font-semibold mb-4 french">Contactez-Nous</h2>
             <p class="english">Reach out to discuss your project: <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a></p>
@@ -304,7 +339,7 @@
         </section>
     </main>
 
-    <footer class="shadow mt-12">
+    <footer class="shadow mt-12 fade-in">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center">
             <p>© 2025 Maverca Solutions. All rights reserved.</p>
         </div>
@@ -312,21 +347,36 @@
 
     <script>
         function switchLanguage(lang) {
-            // Hide all elements with class 'english' or 'french'
             document.querySelectorAll('.english').forEach(el => {
                 el.style.display = lang === 'en' ? 'block' : 'none';
             });
             document.querySelectorAll('.french').forEach(el => {
                 el.style.display = lang === 'fr' ? 'block' : 'none';
             });
-
-            // Update active language button styling
             document.getElementById('lang-en').classList.toggle('active-lang', lang === 'en');
             document.getElementById('lang-fr').classList.toggle('active-lang', lang === 'fr');
         }
 
-        // Ensure English is shown by default on page load
+        // Intersection Observer for animations
         document.addEventListener('DOMContentLoaded', () => {
             switchLanguage('en');
+
+            const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .slide-in-up');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible'); // Reset animation when out of view
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
         });
     </script>
