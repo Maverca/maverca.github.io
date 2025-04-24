@@ -44,8 +44,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maverca Solutions - Premier 3D Sports Technology</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Arial', sans-serif; background-color: #111827; color: #d1d5db; line-height: 1.6; }
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: #d1d5db; line-height: 1.6; }
         .french { display: none; }
         .active-lang { font-weight: bold; color: #ffffff; }
         header, footer { background-color: #0b0f19; }
@@ -158,6 +159,15 @@
         .fade-in.visible {
             opacity: 1;
         }
+        .pop-in {
+            opacity: 0;
+            transform: scale(0.7) translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .pop-in.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
         .slide-in-left {
             opacity: 0;
             transform: translateX(-50px);
@@ -185,6 +195,23 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .highlight-section {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .highlight-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+        .highlight-subtitle {
+            font-size: 1.25rem;
+            color: #d1d5db;
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -211,6 +238,31 @@
             <p class="french">Maverca Solutions est une équipe de développement de premier plan spécialisée dans la technologie sportive 3D en temps réel. Avec un historique éprouvé derrière la simulation de cyclisme Wahoo RGT, plusieurs succès sur consoles de jeux, et des décennies d'expertise dans les jeux 3D, la simulation sportive et les applications évolutives, nous fournissons des solutions de pointe. Notre équipe aguerrie est disponible pour donner vie à votre projet avec une qualité, une rapidité et un support multiplateforme inégalés.</p>
             <div class="video-container full-width-video slide-in-right">
                 <iframe id="youtube-video" src="https://www.youtube.com/embed/L7Q3DWopldU?autoplay=1&mute=1&controls=0&loop=1&playlist=L7Q3DWopldU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <!-- Updated Highlight Section -->
+            <div class="highlight-section">
+                <div>
+                    <h2 class="highlight-title english slide-in-right">WE ARE</h2>
+                    <h2 class="highlight-title french slide-in-right">NOUS SOMMES</h2>
+                </div>
+                <div class="pop-in">
+                    <h2 class="highlight-title english">.GAMERS</h2>
+                    <h2 class="highlight-title french">.JOUEURS</h2>
+                    <p class="highlight-subtitle english">A team of passionate and highly skilled developers</p>
+                    <p class="highlight-subtitle french">Une équipe de développeurs passionnés et hautement qualifiés</p>
+                </div>
+                <div class="pop-in">
+                    <h2 class="highlight-title english">.SPORT SIM EXPERTS</h2>
+                    <h2 class="highlight-title french">.EXPERTS EN SIMULATION SPORTIVE</h2>
+                    <p class="highlight-subtitle english">A leading force in endurance sport simulation for training and e-sport</p>
+                    <p class="highlight-subtitle french">Une force de premier plan dans la simulation de sports d'endurance pour l'entraînement et l'e-sport</p>
+                </div>
+                <div class="pop-in">
+                    <h2 class="highlight-title english">.SERIOUS</h2>
+                    <h2 class="highlight-title french">.SÉRIEUX</h2>
+                    <p class="highlight-subtitle english">We build apps with a tech advantage</p>
+                    <p class="highlight-subtitle french">Nous développons des applications avec un avantage technologique</p>
+                </div>
             </div>
         </section>
 
@@ -248,6 +300,7 @@
         </section>
 
         <!-- Our Team -->
+        <section id="our-team" class="mb- "Our Team -->
         <section id="our-team" class="mb-12 fade-in">
             <h2 class="english">Our Team</h2>
             <h2 class="french">Notre Équipe</h2>
@@ -378,39 +431,31 @@
         var gk_xlsxFileLookup = {};
         var gk_fileData = {};
         function filledCell(cell) {
-          return cell !== '' && cell != null;
+            return cell !== '' && cell != null;
         }
         function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
                 }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
             }
-        }
-        return gk_fileData[filename] || "";
+            return gk_fileData[filename] || "";
         }
     </script>
 
@@ -426,39 +471,33 @@
             document.getElementById('lang-fr').classList.toggle('active-lang', lang === 'fr');
         }
 
-        // Intersection Observer for animations
         document.addEventListener('DOMContentLoaded', () => {
             switchLanguage('en');
-
-            const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .slide-in-up');
-
+            const animatedElements = document.querySelectorAll('.fade-in, .pop-in, .slide-in-left, .slide-in-right, .slide-in-up');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        entry.target.classList.remove('visible'); // Reset animation when out of view
+                        entry.target.classList.remove('visible');
                     }
                 });
             }, {
-                threshold: 0.1 // Trigger when 10% of the element is visible
+                threshold: 0.1
             });
-
             animatedElements.forEach(element => {
                 observer.observe(element);
             });
-
-            // Fullscreen on video click
             const videoIframe = document.getElementById('youtube-video');
             if (videoIframe) {
                 videoIframe.addEventListener('click', () => {
                     if (videoIframe.requestFullscreen) {
                         videoIframe.requestFullscreen();
-                    } else if (videoIframe.mozRequestFullScreen) { // Firefox
+                    } else if (videoIframe.mozRequestFullScreen) {
                         videoIframe.mozRequestFullScreen();
-                    } else if (videoIframe.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                    } else if (videoIframe.webkitRequestFullscreen) {
                         videoIframe.webkitRequestFullscreen();
-                    } else if (videoIframe.msRequestFullscreen) { // IE/Edge
+                    } else if (videoIframe.msRequestFullscreen) {
                         videoIframe.msRequestFullscreen();
                     }
                 });
