@@ -1,0 +1,221 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maverca Solutions - Premier 3D Sports Technology</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #111827; color: #d1d5db; }
+        .french { display: none; }
+        .active-lang { font-weight: bold; color: #ffffff; }
+        header, footer { background-color: #0b0f19; }
+        a { color: #3b82f6; }
+        a:hover { color: #60a5fa; }
+        .placeholder-img { 
+            background-color: #374151; 
+            color: #d1d5db; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.2rem; 
+            font-weight: bold;
+        }
+        .logo-placeholder { height: 150px; width: 100%; max-width: 400px; }
+        .section-img { height: 200px; width: 100%; max-width: 300px; }
+        .trust-img { height: 100px; width: 100%; max-width: 150px; }
+        .flag-img { width: 20px; height: 20px; vertical-align: middle; margin-right: 5px; }
+    </style>
+</head>
+<body>
+    <header class="shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <div class="logo-placeholder placeholder-img">Maverca Solutions Logo</div>
+            <div class="language-selector">
+                <button id="lang-en" class="px-2 active-lang" onclick="switchLanguage('en')">
+                    <img src="https://via.placeholder.com/20x20?text=UK" alt="UK Flag" class="flag-img"> English
+                </button>
+                <button id="lang-fr" class="px-2" onclick="switchLanguage('fr')">
+                    <img src="https://via.placeholder.com/20x20?text=FR" alt="French Flag" class="flag-img"> Français
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Who We Are -->
+        <section id="who-we-are" class="mb-12">
+            <h2 class="text-2xl font-semibold mb-4">Who We Are</h2>
+            <p class="english">Maverca Solutions is a premier development team specializing in real-time 3D sports technology. With a proven track record behind Wahoo RGT cycling simulation, multiple game console hits, and decades of expertise in 3D gaming, sports simulation, and scalable applications, we deliver industry-leading solutions. Our battle-tested team is available to bring your project to life with unmatched quality, speed, and multi-platform support.</p>
+            <p class="french">Maverca Solutions est une équipe de développement de premier plan spécialisée dans la technologie sportive 3D en temps réel. Avec un historique éprouvé derrière la simulation de cyclisme Wahoo RGT, plusieurs succès sur consoles de jeux, et des décennies d'expertise dans les jeux 3D, la simulation sportive et les applications évolutives, nous fournissons des solutions de pointe. Notre équipe aguerrie est disponible pour donner vie à votre projet avec une qualité, une rapidité et un support multiplateforme inégalés.</p>
+        </section>
+
+        <!-- What We Offer -->
+        <section id="what-we-offer" class="mb-12">
+            <h2 class="text-2xl font-semibold mb-4">What We Offer</h2>
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="section-img placeholder-img">What We Offer Image</div>
+                <div>
+                    <p class="english">We can develop your project in record time, ensuring top-tier quality and robust solutions for large-scale user bases across multiple platforms. Our services include:</p>
+                    <p class="french">Nous pouvons développer votre projet en un temps record, garantissant une qualité de premier ordre et des solutions robustes pour des bases d'utilisateurs à grande échelle sur plusieurs plateformes. Nos services incluent :</p>
+                    <ul class="list-disc pl-6 mt-2">
+                        <li class="english">Multi-platform Bluetooth sports simulations (e.g., running, cycling with 3D avatars)</li>
+                        <li class="french">Simulations sportives Bluetooth multiplateformes (par exemple, course à pied, cyclisme avec avatars 3D)</li>
+                        <li class="english">Custom 3D environments or realistic 3D tiles integrated from external API sources</li>
+                        <li class="french">Environnements 3D personnalisés ou tuiles 3D réalistes intégrées à partir de sources API externes</li>
+                        <li class="english">Development of games, training software, or demo products to showcase hardware</li>
+                        <li class="french">Développement de jeux, de logiciels de formation ou de produits de démonstration pour mettre en valeur le matériel</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Team -->
+        <section id="our-team" class="mb-12">
+            <h2 class="text-2xl font-semibold mb-4">Our Team</h2>
+            <p class="english">Meet the experts behind Maverca Solutions:</p>
+            <p class="french">Rencontrez les experts derrière Maverca Solutions :</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                <div class="english">
+                    <h3 class="font-bold">Matthieu Mauduit</h3>
+                    <p>24 years in video game development, UX Lead for Wahoo RGT, and CTO of MCL Sports’ virtual endurance sports broadcasting and tracking platform.</p>
+                </div>
+                <div class="french">
+                    <h3 class="font-bold">Matthieu Mauduit</h3>
+                    <p>24 ans dans le développement de jeux vidéo, responsable UX pour Wahoo RGT, et CTO de la plateforme de diffusion et de suivi des sports d'endurance virtuels de MCL Sports.</p>
+                </div>
+                <div class="english">
+                    <h3 class="font-bold">Claude Verstraeten</h3>
+                    <p>Head of Software Development, previously managed a highly successful 30-person video game studio working with Ubisoft and Electronic Arts.</p>
+                </div>
+                <div class="french">
+                    <h3 class="font-bold">Claude Verstraeten</h3>
+                    <p>Responsable du développement logiciel, a précédemment dirigé un studio de jeux vidéo de 30 personnes très performant travaillant avec Ubisoft et Electronic Arts.</p>
+                </div>
+                <div class="english">
+                    <h3 class="font-bold">Radu Graur</h3>
+                    <p>Backend, API, and server specialist; founder of Wahoo RGT.</p>
+                </div>
+                <div class="french">
+                    <h3 class="font-bold">Radu Graur</h3>
+                    <p>Spécialiste backend, API et serveur ; fondateur de Wahoo RGT.</p>
+                </div>
+                <div class="english">
+                    <h3 class="font-bold">Lionel Caillaud</h3>
+                    <p>2D/3D artist specializing in art direction, environments, character models, and animations.</p>
+                </div>
+                <div class="french">
+                    <h3 class="font-bold">Lionel Caillaud</h3>
+                    <p>Artiste 2D/3D spécialisé dans la direction artistique, les environnements, les modèles de personnages et les animations.</p>
+                </div>
+                <div class="english">
+                    <h3 class="font-bold">Mike Stratulat</h3>
+                    <p>Lead Tester and Customer Support for Wahoo RGT.</p>
+                </div>
+                <div class="french">
+                    <h3 class="font-bold">Mike Stratulat</h3>
+                    <p>Responsable des tests et du support client pour Wahoo RGT.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- They Trust Us -->
+        <section id="they-trust-us" class="mb-12">
+            <h2 class="text-2xl font-semibold mb-4">They Trust Us</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="trust-img placeholder-img">Wahoo</div>
+                <div class="trust-img placeholder-img">Ubisoft</div>
+                <div class="trust-img placeholder-img">Electronic Arts</div>
+                <div class="trust-img placeholder-img">Nintendo Germany</div>
+                <div class="trust-img placeholder-img">Enjoy Gaming Ltd</div>
+                <div class="trust-img placeholder-img">Placeholder X</div>
+                <div class="trust-img placeholder-img">Placeholder X</div>
+                <div class="trust-img placeholder-img">Placeholder X</div>
+                <div class="trust-img placeholder-img">Placeholder X</div>
+                <div class="trust-img placeholder-img">Placeholder X</div>
+                <div class="trust-img placeholder-img">Placeholder X</div>
+                <div class="trust-img placeholder-img">Placeholder X</div>
+            </div>
+        </section>
+
+        <!-- Showreel -->
+        <section id="showreel" class="mb-12">
+            <h2 class="text-2xl font-semibold mb-4">Showreel</h2>
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="section-img placeholder-img">Showreel Image</div>
+                <div>
+                    <p class="english">[Insert link to latest production or portfolio here]</p>
+                    <p class="french">[Insérez le lien vers la dernière production ou le portfolio ici]</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hire Us -->
+        <section id="hire-us" class="mb-12">
+            <h2 class="text-2xl font-semibold mb-4">Hire Us</h2>
+            <p class="english">Maverca Solutions is available to transform your vision into reality. Let us build your next groundbreaking project with speed, precision, and excellence.</p>
+            <p class="french">Maverca Solutions est disponible pour transformer votre vision en réalité. Laissez-nous construire votre prochain projet révolutionnaire avec rapidité, précision et excellence.</p>
+        </section>
+
+        <!-- Contact Us -->
+        <section id="contact-us">
+            <h2 class="text-2xl font-semibold mb-4">Contact Us</h2>
+            <p class="english">Reach out to discuss your project: <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a></p>
+            <p class="french">Contactez-nous pour discuter de votre projet : <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a></p>
+        </section>
+    </main>
+
+    <footer class="shadow mt-12">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center">
+            <p>© 2025 Maverca Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchLanguage(lang) {
+            document.querySelectorAll('.english, .french').forEach(el => {
+                el.style.display = el.classList.contains(lang) ? 'block' : 'none';
+            });
+            document.getElementById('lang-en').classList.toggle('active-lang', lang === 'en');
+            document.getElementById('lang-fr').classList.toggle('active-lang', lang === 'fr');
+        }
+    </script>
