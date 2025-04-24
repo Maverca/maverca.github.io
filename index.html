@@ -37,7 +37,47 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><!DOCTYPE html>
+        </script><script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+</script>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -62,9 +102,6 @@
         }
         .logo-placeholder { height: 150px; width: 100%; max-width: 400px; }
         .trust-img { height: 100px; width: 100%; max-width: 150px; }
-        .flag-img { width: 20px; height: 20px; vertical-align: middle; margin-right: 5px; }
-        .intro-paragraph { font-size: 1.25rem; line-height: 1.75rem; }
-        .intro-img { height: 300px; width: 100%; max-width: 600px; margin: 1rem auto; }
         .offer-img { 
             height: 150px; 
             width: 100%; 
@@ -110,6 +147,28 @@
             line-height: 1.5; 
             margin: 0; 
         }
+        section h2 {
+            font-size: 1.875rem; /* Equivalent to text-3xl */
+            color: #ffffff; /* Fully white */
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin: 1rem 0;
+            display: block; /* Ensure container is visible */
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block; /* Ensure iframe is visible */
+            cursor: pointer; /* Indicate clickability */
+        }
 
         /* Animation Styles */
         .fade-in {
@@ -153,12 +212,8 @@
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <div class="logo-placeholder placeholder-img fade-in">Maverca Solutions Logo</div>
             <div class="language-selector">
-                <button id="lang-en" class="px-2 active-lang" onclick="switchLanguage('en')">
-                    <img src="https://via.placeholder.com/20x20?text=UK" alt="UK Flag" class="flag-img"> English
-                </button>
-                <button id="lang-fr" class="px-2" onclick="switchLanguage('fr')">
-                    <img src="https://via.placeholder.com/20x20?text=FR" alt="French Flag" class="flag-img"> Français
-                </button>
+                <button id="lang-en" class="px-2 active-lang" onclick="switchLanguage('en')">English</button>
+                <button id="lang-fr" class="px-2" onclick="switchLanguage('fr')">Français</button>
             </div>
         </div>
     </header>
@@ -166,16 +221,22 @@
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <!-- Who We Are -->
         <section id="who-we-are" class="mb-12 fade-in">
-            <p class="english intro-paragraph">Maverca Solutions is a premier development team specializing in real-time 3D sports technology. With a proven track record behind Wahoo RGT cycling simulation, multiple game console hits, and decades of expertise in 3D gaming, sports simulation, and scalable applications, we deliver industry-leading solutions. Our battle-tested team is available to bring your project to life with unmatched quality, speed, and multi-platform support.</p>
-            <p class="french intro-paragraph">Maverca Solutions est une équipe de développement de premier plan spécialisée dans la technologie sportive 3D en temps réel. Avec un historique éprouvé derrière la simulation de cyclisme Wahoo RGT, plusieurs succès sur consoles de jeux, et des décennies d'expertise dans les jeux 3D, la simulation sportive et les applications évolutives, nous fournissons des solutions de pointe. Notre équipe aguerrie est disponible pour donner vie à votre projet avec une qualité, une rapidité et un support multiplateforme inégalés.</p>
-            <div class="intro-img placeholder-img slide-in-right">Intro Image</div>
+            <h2 class="english">Who We Are</h2>
+            <h2 class="french">Qui Nous Sommes</h2>
+            <p class="english">Maverca Solutions is a premier development team specializing in real-time 3D sports technology. With a proven track record behind Wahoo RGT cycling simulation, multiple game console hits, and decades of expertise in 3D gaming, sports simulation, and scalable applications, we deliver industry-leading solutions. Our battle-tested team is available to bring your project to life with unmatched quality, speed, and multi-platform support.</p>
+            <p class="french">Maverca Solutions est une équipe de développement de premier plan spécialisée dans la technologie sportive 3D en temps réel. Avec un historique éprouvé derrière la simulation de cyclisme Wahoo RGT, plusieurs succès sur consoles de jeux, et des décennies d'expertise dans les jeux 3D, la simulation sportive et les applications évolutives, nous fournissons des solutions de pointe. Notre équipe aguerrie est disponible pour donner vie à votre projet avec une qualité, une rapidité et un support multiplateforme inégalés.</p>
+            <div class="video-container slide-in-right">
+                <iframe id="youtube-video" src="https://www.youtube.com/embed/L7Q3DWopldU?autoplay=1&mute=1&controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
         </section>
 
         <!-- What We Offer -->
         <section id="what-we-offer" class="mb-12 fade-in">
+            <h2 class="english">What We Offer</h2>
+            <h2 class="french">Ce Que Nous Offrons</h2>
             <div class="mb-6">
-                <p class="english intro-paragraph">We can develop your project in record time, ensuring top-tier quality and robust solutions for large-scale user bases across multiple platforms. Our services include:</p>
-                <p class="french intro-paragraph">Nous pouvons développer votre projet en un temps record, garantissant une qualité de premier ordre et des solutions robustes pour des bases d'utilisateurs à grande échelle sur plusieurs plateformes. Nos services incluent :</p>
+                <p class="english">We can develop your project in record time, ensuring top-tier quality and robust solutions for large-scale user bases across multiple platforms. Our services include:</p>
+                <p class="french">Nous pouvons développer votre projet en un temps record, garantissant une qualité de premier ordre et des solutions robustes pour des bases d'utilisateurs à grande échelle sur plusieurs plateformes. Nos services incluent :</p>
                 <ul class="list-disc pl-6 mt-2">
                     <li class="english">Multi-platform Bluetooth sports simulations (e.g., running, cycling with 3D avatars)</li>
                     <li class="french">Simulations sportives Bluetooth multiplateformes (par exemple, course à pied, cyclisme avec avatars 3D)</li>
@@ -206,8 +267,8 @@
 
         <!-- Our Team -->
         <section id="our-team" class="mb-12 fade-in">
-            <h2 class="text-2xl font-semibold mb-4 english">Our Team</h2>
-            <h2 class="text-2xl font-semibold mb-4 french">Notre Équipe</h2>
+            <h2 class="english">Our Team</h2>
+            <h2 class="french">Notre Équipe</h2>
             <p class="english">Meet the experts behind Maverca Solutions:</p>
             <p class="french">Rencontrez les experts derrière Maverca Solutions :</p>
             <div class="team-container">
@@ -291,8 +352,8 @@
 
         <!-- They Trust Us -->
         <section id="they-trust-us" class="mb-12 fade-in">
-            <h2 class="text-2xl font-semibold mb-4 english">They Trust Us</h2>
-            <h2 class="text-2xl font-semibold mb-4 french">Ils Nous Font Confiance</h2>
+            <h2 class="english">They Trust Us</h2>
+            <h2 class="french">Ils Nous Font Confiance</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="trust-img placeholder-img slide-in-up">Wahoo</div>
                 <div class="trust-img placeholder-img slide-in-up">Ubisoft</div>
@@ -309,31 +370,18 @@
             </div>
         </section>
 
-        <!-- Showreel -->
-        <section id="showreel" class="mb-12 fade-in">
-            <h2 class="text-2xl font-semibold mb-4 english">Showreel</h2>
-            <h2 class="text-2xl font-semibold mb-4 french">Showreel</h2>
-            <div class="flex flex-col md:flex-row gap-6">
-                <div class="section-img placeholder-img slide-in-left">Showreel Image</div>
-                <div class="slide-in-right">
-                    <p class="english">[Insert link to latest production or portfolio here]</p>
-                    <p class="french">[Insérez le lien vers la dernière production ou le portfolio ici]</p>
-                </div>
-            </div>
-        </section>.
-
         <!-- Hire Us -->
         <section id="hire-us" class="mb-12 fade-in">
-            <h2 class="text-2xl font-semibold mb-4 english">Hire Us</h2>
-            <h2 class="text-2xl font-semibold mb-4 french">Engagez-Nous</h2>
+            <h2 class="english">Hire Us</h2>
+            <h2 class="french">Engagez-Nous</h2>
             <p class="english">Maverca Solutions is available to transform your vision into reality. Let us build your next groundbreaking project with speed, precision, and excellence.</p>
             <p class="french">Maverca Solutions est disponible pour transformer votre vision en réalité. Laissez-nous construire votre prochain projet révolutionnaire avec rapidité, précision et excellence.</p>
         </section>
 
         <!-- Contact Us -->
         <section id="contact-us" class="fade-in">
-            <h2 class="text-2xl font-semibold mb-4 english">Contact Us</h2>
-            <h2 class="text-2xl font-semibold mb-4 french">Contactez-Nous</h2>
+            <h2 class="english">Contact Us</h2>
+            <h2 class="french">Contactez-Nous</h2>
             <p class="english">Reach out to discuss your project: <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a></p>
             <p class="french">Contactez-nous pour discuter de votre projet : <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a></p>
         </section>
@@ -378,5 +426,21 @@
             animatedElements.forEach(element => {
                 observer.observe(element);
             });
+
+            // Fullscreen on video click
+            const videoIframe = document.getElementById('youtube-video');
+            if (videoIframe) {
+                videoIframe.addEventListener('click', () => {
+                    if (videoIframe.requestFullscreen) {
+                        videoIframe.requestFullscreen();
+                    } else if (videoIframe.mozRequestFullScreen) { // Firefox
+                        videoIframe.mozRequestFullScreen();
+                    } else if (videoIframe.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                        videoIframe.webkitRequestFullscreen();
+                    } else if (videoIframe.msRequestFullscreen) { // IE/Edge
+                        videoIframe.msRequestFullscreen();
+                    }
+                });
+            }
         });
     </script>
