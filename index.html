@@ -84,14 +84,16 @@
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <!-- Who We Are -->
         <section id="who-we-are" class="mb-12">
-            <h2 class="text-2xl font-semibold mb-4">Who We Are</h2>
+            <h2 class="text-2xl font-semibold mb-4 english">Who We Are</h2>
+            <h2 class="text-2xl font-semibold mb-4 french">À Propos</h2>
             <p class="english">Maverca Solutions is a premier development team specializing in real-time 3D sports technology. With a proven track record behind Wahoo RGT cycling simulation, multiple game console hits, and decades of expertise in 3D gaming, sports simulation, and scalable applications, we deliver industry-leading solutions. Our battle-tested team is available to bring your project to life with unmatched quality, speed, and multi-platform support.</p>
             <p class="french">Maverca Solutions est une équipe de développement de premier plan spécialisée dans la technologie sportive 3D en temps réel. Avec un historique éprouvé derrière la simulation de cyclisme Wahoo RGT, plusieurs succès sur consoles de jeux, et des décennies d'expertise dans les jeux 3D, la simulation sportive et les applications évolutives, nous fournissons des solutions de pointe. Notre équipe aguerrie est disponible pour donner vie à votre projet avec une qualité, une rapidité et un support multiplateforme inégalés.</p>
         </section>
 
         <!-- What We Offer -->
         <section id="what-we-offer" class="mb-12">
-            <h2 class="text-2xl font-semibold mb-4">What We Offer</h2>
+            <h2 class="text-2xl font-semibold mb-4 english">What We Offer</h2>
+            <h2 class="text-2xl font-semibold mb-4 french">Nos Compétences</h2>
             <div class="flex flex-col md:flex-row gap-6">
                 <div class="section-img placeholder-img">What We Offer Image</div>
                 <div>
@@ -111,7 +113,8 @@
 
         <!-- Our Team -->
         <section id="our-team" class="mb-12">
-            <h2 class="text-2xl font-semibold mb-4">Our Team</h2>
+            <h2 class="text-2xl font-semibold mb-4 english">Our Team</h2>
+            <h2 class="text-2xl font-semibold mb-4 french">Notre Équipe</h2>
             <p class="english">Meet the experts behind Maverca Solutions:</p>
             <p class="french">Rencontrez les experts derrière Maverca Solutions :</p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
@@ -160,7 +163,8 @@
 
         <!-- They Trust Us -->
         <section id="they-trust-us" class="mb-12">
-            <h2 class="text-2xl font-semibold mb-4">They Trust Us</h2>
+            <h2 class="text-2xl font-semibold mb-4 english">They Trust Us</h2>
+            <h2 class="text-2xl font-semibold mb-4 french">Ils Nous Font Confiance</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="trust-img placeholder-img">Wahoo</div>
                 <div class="trust-img placeholder-img">Ubisoft</div>
@@ -179,7 +183,8 @@
 
         <!-- Showreel -->
         <section id="showreel" class="mb-12">
-            <h2 class="text-2xl font-semibold mb-4">Showreel</h2>
+            <h2 class="text-2xl font-semibold mb-4 english">Showreel</h2>
+            <h2 class="text-2xl font-semibold mb-4 french">Showreel</h2>
             <div class="flex flex-col md:flex-row gap-6">
                 <div class="section-img placeholder-img">Showreel Image</div>
                 <div>
@@ -191,14 +196,16 @@
 
         <!-- Hire Us -->
         <section id="hire-us" class="mb-12">
-            <h2 class="text-2xl font-semibold mb-4">Hire Us</h2>
+            <h2 class="text-2xl font-semibold mb-4 english">Hire Us</h2>
+            <h2 class="text-2xl font-semibold mb-4 french">Engagez-Nous</h2>
             <p class="english">Maverca Solutions is available to transform your vision into reality. Let us build your next groundbreaking project with speed, precision, and excellence.</p>
             <p class="french">Maverca Solutions est disponible pour transformer votre vision en réalité. Laissez-nous construire votre prochain projet révolutionnaire avec rapidité, précision et excellence.</p>
         </section>
 
         <!-- Contact Us -->
         <section id="contact-us">
-            <h2 class="text-2xl font-semibold mb-4">Contact Us</h2>
+            <h2 class="text-2xl font-semibold mb-4 english">Contact Us</h2>
+            <h2 class="text-2xl font-semibold mb-4 french">Contactez-Nous</h2>
             <p class="english">Reach out to discuss your project: <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a></p>
             <p class="french">Contactez-nous pour discuter de votre projet : <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a></p>
         </section>
@@ -212,10 +219,21 @@
 
     <script>
         function switchLanguage(lang) {
-            document.querySelectorAll('.english, .french').forEach(el => {
-                el.style.display = el.classList.contains(lang) ? 'block' : 'none';
+            // Hide all elements with class 'english' or 'french'
+            document.querySelectorAll('.english').forEach(el => {
+                el.style.display = lang === 'en' ? 'block' : 'none';
             });
+            document.querySelectorAll('.french').forEach(el => {
+                el.style.display = lang === 'fr' ? 'block' : 'none';
+            });
+
+            // Update active language button styling
             document.getElementById('lang-en').classList.toggle('active-lang', lang === 'en');
             document.getElementById('lang-fr').classList.toggle('active-lang', lang === 'fr');
         }
+
+        // Ensure English is shown by default on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLanguage('en');
+        });
     </script>
