@@ -160,6 +160,14 @@
             margin: 1rem 0;
             display: block; /* Ensure container is visible */
         }
+        .full-width-video {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
         .video-container iframe {
             position: absolute;
             top: 0;
@@ -168,6 +176,17 @@
             height: 100%;
             display: block; /* Ensure iframe is visible */
             cursor: pointer; /* Indicate clickability */
+        }
+        .lang-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 0.5rem;
+        }
+        .lang-icon {
+            width: 24px;
+            height: 16px;
+            margin-bottom: 0.25rem;
         }
 
         /* Animation Styles */
@@ -211,9 +230,15 @@
     <header class="shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <div class="logo-placeholder placeholder-img fade-in">Maverca Solutions Logo</div>
-            <div class="language-selector">
-                <button id="lang-en" class="px-2 active-lang" onclick="switchLanguage('en')">English</button>
-                <button id="lang-fr" class="px-2" onclick="switchLanguage('fr')">Français</button>
+            <div class="language-selector flex items-center">
+                <div class="lang-item">
+                    <img src="images/UK-US_Flag.png" alt="English Flag" class="lang-icon">
+                    <button id="lang-en" class="px-2 active-lang" onclick="switchLanguage('en')">English</button>
+                </div>
+                <div class="lang-item">
+                    <img src="images/FR_Flag.png" alt="French Flag" class="lang-icon">
+                    <button id="lang-fr" class="px-2" onclick="switchLanguage('fr')">Français</button>
+                </div>
             </div>
         </div>
     </header>
@@ -225,8 +250,8 @@
             <h2 class="french">Qui Nous Sommes</h2>
             <p class="english">Maverca Solutions is a premier development team specializing in real-time 3D sports technology. With a proven track record behind Wahoo RGT cycling simulation, multiple game console hits, and decades of expertise in 3D gaming, sports simulation, and scalable applications, we deliver industry-leading solutions. Our battle-tested team is available to bring your project to life with unmatched quality, speed, and multi-platform support.</p>
             <p class="french">Maverca Solutions est une équipe de développement de premier plan spécialisée dans la technologie sportive 3D en temps réel. Avec un historique éprouvé derrière la simulation de cyclisme Wahoo RGT, plusieurs succès sur consoles de jeux, et des décennies d'expertise dans les jeux 3D, la simulation sportive et les applications évolutives, nous fournissons des solutions de pointe. Notre équipe aguerrie est disponible pour donner vie à votre projet avec une qualité, une rapidité et un support multiplateforme inégalés.</p>
-            <div class="video-container slide-in-right">
-                <iframe id="youtube-video" src="https://www.youtube.com/embed/L7Q3DWopldU?autoplay=1&mute=1&controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="video-container full-width-video slide-in-right">
+                <iframe id="youtube-video" src="https://www.youtube.com/embed/L7Q3DWopldU?autoplay=1&mute=1&controls=0&loop=1&playlist=L7Q3DWopldU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </section>
 
