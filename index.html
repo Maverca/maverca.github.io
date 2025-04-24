@@ -37,47 +37,7 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-</script>
-<!DOCTYPE html>
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -85,7 +45,7 @@
     <title>Maverca Solutions - Premier 3D Sports Technology</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Arial', sans-serif; background-color: #111827; color: #d1d5db; }
+        body { font-family: 'Arial', sans-serif; background-color: #111827; color: #d1d5db; line-height: 1.6; }
         .french { display: none; }
         .active-lang { font-weight: bold; color: #ffffff; }
         header, footer { background-color: #0b0f19; }
@@ -108,19 +68,19 @@
             max-width: 200px; 
             margin-left: auto; 
             margin-right: auto; 
-            margin-bottom: 1rem; 
+            margin-bottom: 1.5rem; 
         }
         .offer-item { text-align: center; }
         .team-container { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 1.5rem; 
-            margin-top: 1.5rem; 
+            gap: 2rem; 
+            margin-top: 2rem; 
         }
         .team-member { 
             display: flex; 
             flex-direction: column; 
-            padding: 1rem; 
+            padding: 1.5rem; 
             background-color: #1f2937; 
             border-radius: 8px; 
         }
@@ -129,7 +89,7 @@
             flex-direction: row; 
             align-items: center; 
             gap: 1rem; 
-            margin-bottom: 0.5rem; 
+            margin-bottom: 1rem; 
         }
         .team-img { 
             width: 100px; 
@@ -144,21 +104,24 @@
         }
         .team-description { 
             font-size: 1rem; 
-            line-height: 1.5; 
+            line-height: 1.6; 
             margin: 0; 
         }
         section h2 {
-            font-size: 1.875rem; /* Equivalent to text-3xl */
-            color: #ffffff; /* Fully white */
+            font-size: 1.875rem; 
+            color: #ffffff; 
             font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        section p, section ul {
+            margin-bottom: 1.5rem;
         }
         .video-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            margin: 1rem 0;
-            display: block; /* Ensure container is visible */
+            padding-bottom: 56.25%; 
+            margin: 2rem 0; 
+            display: block; 
         }
         .full-width-video {
             width: 100vw;
@@ -174,8 +137,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            display: block; /* Ensure iframe is visible */
-            cursor: pointer; /* Indicate clickability */
+            display: block; 
+            cursor: pointer; 
         }
         .lang-item {
             display: flex;
@@ -188,8 +151,6 @@
             height: 16px;
             margin-bottom: 0.25rem;
         }
-
-        /* Animation Styles */
         .fade-in {
             opacity: 0;
             transition: opacity 0.8s ease-out;
@@ -243,11 +204,9 @@
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <main class="max-w-7xl mx-auto py-8 sm:px-6 lg:px-8">
         <!-- Who We Are -->
         <section id="who-we-are" class="mb-12 fade-in">
-            <h2 class="english">Who We Are</h2>
-            <h2 class="french">Qui Nous Sommes</h2>
             <p class="english">Maverca Solutions is a premier development team specializing in real-time 3D sports technology. With a proven track record behind Wahoo RGT cycling simulation, multiple game console hits, and decades of expertise in 3D gaming, sports simulation, and scalable applications, we deliver industry-leading solutions. Our battle-tested team is available to bring your project to life with unmatched quality, speed, and multi-platform support.</p>
             <p class="french">Maverca Solutions est une équipe de développement de premier plan spécialisée dans la technologie sportive 3D en temps réel. Avec un historique éprouvé derrière la simulation de cyclisme Wahoo RGT, plusieurs succès sur consoles de jeux, et des décennies d'expertise dans les jeux 3D, la simulation sportive et les applications évolutives, nous fournissons des solutions de pointe. Notre équipe aguerrie est disponible pour donner vie à votre projet avec une qualité, une rapidité et un support multiplateforme inégalés.</p>
             <div class="video-container full-width-video slide-in-right">
@@ -257,8 +216,6 @@
 
         <!-- What We Offer -->
         <section id="what-we-offer" class="mb-12 fade-in">
-            <h2 class="english">What We Offer</h2>
-            <h2 class="french">Ce Que Nous Offrons</h2>
             <div class="mb-6">
                 <p class="english">We can develop your project in record time, ensuring top-tier quality and robust solutions for large-scale user bases across multiple platforms. Our services include:</p>
                 <p class="french">Nous pouvons développer votre projet en un temps record, garantissant une qualité de premier ordre et des solutions robustes pour des bases d'utilisateurs à grande échelle sur plusieurs plateformes. Nos services incluent :</p>
@@ -271,7 +228,7 @@
                     <li class="french">Développement de jeux, de logiciels de formation ou de produits de démonstration pour mettre en valeur le matériel</li>
                 </ul>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="offer-item slide-in-left">
                     <div class="offer-img placeholder-img">Design</div>
                     <p class="english">Our expertise in user experience (UX) design ensures intuitive and engaging interfaces. We collaborate closely with clients to craft the best user experience, leveraging decades of design experience to create visually stunning and functional solutions.</p>
@@ -376,22 +333,20 @@
         </section>
 
         <!-- They Trust Us -->
-        <section id="they-trust-us" class="mb-12 fade-in">
+        <section id="they-trust-us" class="mb-20 fade-in">
             <h2 class="english">They Trust Us</h2>
             <h2 class="french">Ils Nous Font Confiance</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="trust-img placeholder-img slide-in-up">Wahoo</div>
-                <div class="trust-img placeholder-img slide-in-up">Ubisoft</div>
-                <div class="trust-img placeholder-img slide-in-up">Electronic Arts</div>
-                <div class="trust-img placeholder-img slide-in-up">Nintendo Germany</div>
-                <div class="trust-img placeholder-img slide-in-up">Enjoy Gaming Ltd</div>
-                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
-                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
-                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
-                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
-                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
-                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
-                <div class="trust-img placeholder-img slide-in-up">Placeholder X</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="trust-img slide-in-up"><img src="images/partners/Wahoo_Logo.png" alt="Wahoo"></div>
+                <div class="trust-img slide-in-up"><img src="images/partners/Ubisoft_Logo.png" alt="Ubisoft"></div>
+                <div class="trust-img slide-in-up"><img src="images/partners/EA_Logo.png" alt="Electronic Arts"></div>
+                <div class="trust-img slide-in-up"><img src="images/partners/Nintendo_Logo.png" alt="Nintendo"></div>
+                <div class="trust-img slide-in-up"><img src="images/partners/Activision_Logo.png" alt="Activision"></div>
+                <div class="trust-img slide-in-up"><img src="images/partners/Namco_Logo.png" alt="Namco"></div>
+                <div class="trust-img slide-in-up"><img src="images/partners/TDK_Logo.png" alt="TDK"></div>
+                <div class="trust-img slide-in-up"><img src="images/partners/CBSFilms_Logo.png" alt="CBS Films"></div>
+                <div class="trust-img slide-in-up"><img src="images/partners/Essilor_Logo.png" alt="ESSILOR"></div>
+                <div class="trust-img slide-in-up"><img src="images/partners/EnjoyGaming_Logo.png" alt="Enjoy Gaming"></div>
             </div>
         </section>
 
@@ -417,6 +372,47 @@
             <p>© 2025 Maverca Solutions. All rights reserved.</p>
         </div>
     </footer>
+
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+    </script>
 
     <script>
         function switchLanguage(lang) {
