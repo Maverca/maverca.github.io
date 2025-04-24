@@ -74,6 +74,43 @@
             margin-bottom: 1rem; 
         }
         .offer-item { text-align: center; }
+        /* Team Section Styles */
+        .team-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 1.5rem; 
+            margin-top: 1.5rem; 
+        }
+        .team-member { 
+            display: flex; 
+            flex-direction: column; 
+            padding: 1rem; 
+            background-color: #1f2937; 
+            border-radius: 8px; 
+        }
+        .team-header { 
+            display: flex; 
+            flex-direction: row; 
+            align-items: center; 
+            gap: 1rem; 
+            margin-bottom: 0.5rem; 
+        }
+        .team-img { 
+            width: 100px; 
+            height: 100px; 
+            flex-shrink: 0; 
+            object-fit: cover; 
+        }
+        .team-name { 
+            font-size: 1.25rem; 
+            font-weight: bold; 
+            margin: 0; 
+        }
+        .team-description { 
+            font-size: 1rem; 
+            line-height: 1.5; 
+            margin: 0; 
+        }
     </style>
 </head>
 <body>
@@ -138,46 +175,81 @@
             <h2 class="text-2xl font-semibold mb-4 french">Notre Équipe</h2>
             <p class="english">Meet the experts behind Maverca Solutions:</p>
             <p class="french">Rencontrez les experts derrière Maverca Solutions :</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                <div class="english">
-                    <h3 class="font-bold">Matthieu Mauduit</h3>
-                    <p>24 years in video game development, UX Lead for Wahoo RGT, and CTO of MCL Sports’ virtual endurance sports broadcasting and tracking platform.</p>
+            <div class="team-container">
+                <!-- Matthieu Mauduit -->
+                <div class="team-member english">
+                    <div class="team-header">
+                        <img src="images/matt.png" alt="Team Image" class="team-img">
+                        <h3 class="team-name">Matthieu Mauduit</h3>
+                    </div>
+                    <p class="team-description">24 years in video game development, UX Lead for Wahoo RGT, and CTO of MCL Sports’ virtual endurance sports broadcasting and tracking platform.</p>
                 </div>
-                <div class="french">
-                    <h3 class="font-bold">Matthieu Mauduit</h3>
-                    <p>24 ans dans le développement de jeux vidéo, responsable UX pour Wahoo RGT, et CTO de la plateforme de diffusion et de suivi des sports d'endurance virtuels de MCL Sports.</p>
+                <div class="team-member french">
+                    <div class="team-header">
+                        <img src="images/matt.png" alt="Team Image" class="team-img">
+                        <h3 class="team-name">Matthieu Mauduit</h3>
+                    </div>
+                    <p class="team-description">24 ans dans le développement de jeux vidéo, responsable UX pour Wahoo RGT, et CTO de la plateforme de diffusion et de suivi des sports d'endurance virtuels de MCL Sports.</p>
                 </div>
-                <div class="english">
-                    <h3 class="font-bold">Claude Verstraeten</h3>
-                    <p>Head of Software Development, previously managed a highly successful 30-person video game studio working with Ubisoft and Electronic Arts.</p>
+                <!-- Claude Verstraeten -->
+                <div class="team-member english">
+                    <div class="team-header">
+                        <img src="images/claude.png" alt="Team Image" class="team-img">
+                        <h3 class="team-name">Claude Verstraeten</h3>
+                    </div>
+                    <p class="team-description">Head of Software Development, previously managed a highly successful 30-person video game studio working with Ubisoft and Electronic Arts.</p>
                 </div>
-                <div class="french">
-                    <h3 class="font-bold">Claude Verstraeten</h3>
-                    <p>Responsable du développement logiciel, a précédemment dirigé un studio de jeux vidéo de 30 personnes très performant travaillant avec Ubisoft et Electronic Arts.</p>
+                <div class="team-member french">
+                    <div class="team-header">
+                        <img src="images/claude.png" alt="Team Image" class="team-img">
+                        <h3 class="team-name">Claude Verstraeten</h3>
+                    </div>
+                    <p class="team-description">Responsable du développement logiciel, a précédemment dirigé un studio de jeux vidéo de 30 personnes très performant travaillant avec Ubisoft et Electronic Arts.</p>
                 </div>
-                <div class="english">
-                    <h3 class="font-bold">Radu Graur</h3>
-                    <p>Backend, API, and server specialist; founder of Wahoo RGT.</p>
+                <!-- Radu Graur -->
+                <div class="team-member english">
+                    <div class="team-header">
+                        <img src="images/radu.png" alt="Team Image" class="team-img">
+                        <h3 class="team-name">Radu Graur</h3>
+                    </div>
+                    <p class="team-description">Backend, API, and server specialist; founder of Wahoo RGT.</p>
                 </div>
-                <div class="french">
-                    <h3 class="font-bold">Radu Graur</h3>
-                    <p>Spécialiste backend, API et serveur ; fondateur de Wahoo RGT.</p>
+                <div class="team-member french">
+                    <div class="team-header">
+                        <img src="images/radu.png" alt="Team Image" class="team-img">
+                        <h3 class="team-name">Radu Graur</h3>
+                    </div>
+                    <p class="team-description">Spécialiste backend, API et serveur ; fondateur de Wahoo RGT.</p>
                 </div>
-                <div class="english">
-                    <h3 class="font-bold">Lionel Caillaud</h3>
-                    <p>2D/3D artist specializing in art direction, environments, character models, and animations.</p>
+                <!-- Lionel Caillaud -->
+                <div class="team-member english">
+                    <div class="team-header">
+                        <img src="images/lionel.png" alt="Team Image" class="team-img">
+                        <h3 class="team-name">Lionel Caillaud</h3>
+                    </div>
+                    <p class="team-description">2D/3D artist specializing in art direction, environments, character models, and animations.</p>
                 </div>
-                <div class="french">
-                    <h3 class="font-bold">Lionel Caillaud</h3>
-                    <p>Artiste 2D/3D spécialisé dans la direction artistique, les environnements, les modèles de personnages et les animations.</p>
+                <div class="team-member french">
+                    <div class="team-header">
+                        <img src="images/lionel.png" alt="Team Image" class="team-img">
+                        <h3 class="team-name">Lionel Caillaud</h3>
+                    </div>
+                    <p class="team-description">Artiste 2D/3D spécialisé dans la direction artistique, les environnements, les modèles de personnages et les animations.</p>
                 </div>
-                <div class="english">
-                    <h3 class="font-bold">Mike Stratulat</h3>
-                    <p>Lead Tester and Customer Support for Wahoo RGT.</p>
+                <!-- Mike Stratulat -->
+                <div class="team-member english">
+                    <div class="team-header">
+                        <img src="images/mike.png" alt="Team Image" class="team-img">
+                        <h3 class="team-name">Mike Stratulat</h3>
+                    </div>
+                    <p class="team-description">Lead Tester and Customer Support for Wahoo RGT.</p>
                 </div>
-                <div class="french">
-                    <h3 class="font-bold">Mike Stratulat</h3>
-                    <p>Responsable des tests et du support client pour Wahoo RGT.</p>
+                <div class="team-member french">
+                    <div class="team-header">
+                        <img src="images/mike.png" alt="Team Image" class="team-img">
+                        <h3 class="team-name">Mike Stratulat</h3>
+                    </div>
+                    <p class="team-description">Responsable des tests et du support client pour Wahoo RGT.</p>
                 </div>
             </div>
         </section>
