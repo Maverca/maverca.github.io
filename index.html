@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -61,8 +22,8 @@
             font-size: 1.2rem; 
             font-weight: bold;
         }
-        .logo-placeholder { height: 150px; width: 100%; max-width: 400px; }
-        .trust-img { height: 100px; width: 100%; max-width: 150px; }
+        .logo-placeholder { height: 120px; width: 100%; max-width: 300px; }
+        .trust-img { height: 60px; width: 100%; max-width: 100px; }
         .offer-img { 
             height: 150px; 
             width: 100%; 
@@ -212,14 +173,59 @@
             color: #d1d5db;
             margin-top: 0.5rem;
         }
+        /* Improved header layout for mobile */
+        header .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+        header img.logo {
+            height: 300px;
+            width: auto;
+        }
+        .language-selector {
+            display: flex;
+            gap: 1rem;
+        }
+        @media (max-width: 640px) {
+            header .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .language-selector {
+                justify-content: center;
+            }
+        }
+        /* Updated trust-us section */
+        #they-trust-us .trust-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #they-trust-us .trust-grid .trust-img {
+            flex: 0 0 calc(25% - 1.5rem);
+            max-width: 100px;
+            height: 60px;
+        }
+        @media (max-width: 640px) {
+            #they-trust-us .trust-grid .trust-img {
+                flex: 0 0 calc(50% - 1rem);
+                max-width: 100px;
+                height: 60px;
+            }
+        }
     </style>
 </head>
 <body>
     <header class="shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          
-			 <img src="images/logo.png">
-            <div class="language-selector flex items-center">
+        <div class="container max-w-7xl mx-auto">
+            <img src="images/logo.png" alt="Maverca Solutions Logo" class="logo">
+            <div class="language-selector">
                 <div class="lang-item">
                     <img src="images/UK-US_Flag.png" alt="English Flag" class="lang-icon">
                     <button id="lang-en" class="px-2 active-lang" onclick="switchLanguage('en')">English</button>
@@ -238,10 +244,8 @@
             <p class="english">Maverca Solutions is a leading development team with expertise in real-time 3D technology. Known for Wahoo RGT and multiple game console successes, we specialize in 3D gaming and scalable applications. Our experienced team delivers high-quality, multi-platform solutions with speed and precision.</p>
             <p class="french">Maverca Solutions est une équipe de développement de premier plan spécialisée dans les applications 3D temps réel. Réputée pour Wahoo RGT et plusieurs succès sur consoles de jeu, nous excellons dans les jeux 3D et les applications évolutives. Notre équipe expérimentée propose des solutions multiplateformes de haute qualité, avec rapidité et précision.</p>
             <div class="video-container full-width-video slide-in-right">
-			
                 <iframe id="youtube-video" src="https://www.youtube.com/embed/xFwJKydc8Hk?autoplay=1&mute=1&controls=0&loop=1&playlist=xFwJKydc8Hk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <!-- Updated Highlight Section -->
             <div class="highlight-section">
                 <div>
                     <h2 class="highlight-title english slide-in-right">WE ARE</h2>
@@ -273,7 +277,6 @@
             <div class="mb-6">
                 <p class="english">We can develop your project in record time, ensuring top-tier quality and robust solutions for large-scale user bases across multiple platforms. Our services include:</p>
                 <p class="french">Nous pouvons développer votre projet en un temps record, garantissant une qualité de premier ordre et des solutions robustes pour des bases d'utilisateurs à grande échelle sur plusieurs plateformes. Nos services incluent :</p>
-               
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="offer-item slide-in-left">
@@ -295,7 +298,6 @@
         </section>
 
         <!-- Our Team -->
-        <section id="our-team" class="mb- "Our Team -->
         <section id="our-team" class="mb-12 fade-in">
             <h2 class="english">Our Team</h2>
             <h2 class="french">Notre Équipe</h2>
@@ -384,7 +386,7 @@
         <section id="they-trust-us" class="mb-20 fade-in">
             <h2 class="english">They Trust Us</h2>
             <h2 class="french">Ils Nous Font Confiance</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="trust-grid">
                 <div class="trust-img slide-in-up"><img src="images/partners/Wahoo_Logo.png" alt="Wahoo"></div>
                 <div class="trust-img slide-in-up"><img src="images/partners/Ubisoft_Logo.png" alt="Ubisoft"></div>
                 <div class="trust-img slide-in-up"><img src="images/partners/EA_Logo.png" alt="Electronic Arts"></div>
