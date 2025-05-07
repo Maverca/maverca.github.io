@@ -1,9 +1,48 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maverca Solutions - Premier 3D Sports Technology</title>
+    <title>Maverca Solutions - 3D Sports Technology</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -173,7 +212,12 @@
             color: #d1d5db;
             margin-top: 0.5rem;
         }
-        /* Improved header layout for mobile */
+        .highlight-section > div:not(:first-child) .highlight-title {
+            margin-left: 4rem;
+        }
+        .highlight-section > div:not(:first-child) .highlight-subtitle {
+            margin-left: 4rem;
+        }
         header .container {
             display: flex;
             flex-wrap: wrap;
@@ -198,7 +242,6 @@
                 justify-content: center;
             }
         }
-        /* Updated trust-us section */
         #they-trust-us .trust-grid {
             display: flex;
             flex-wrap: wrap;
@@ -241,8 +284,8 @@
     <main class="max-w-7xl mx-auto py-8 sm:px-6 lg:px-8">
         <!-- Who We Are -->
         <section id="who-we-are" class="mb-12 fade-in">
-            <p class="english">Maverca Solutions is a leading development team with expertise in real-time 3D technology. Known for Wahoo RGT and multiple game console successes, we specialize in 3D gaming and scalable applications. Our experienced team delivers high-quality, multi-platform solutions with speed and precision.</p>
-            <p class="french">Maverca Solutions est une équipe de développement de premier plan spécialisée dans les applications 3D temps réel. Réputée pour Wahoo RGT et plusieurs succès sur consoles de jeu, nous excellons dans les jeux 3D et les applications évolutives. Notre équipe expérimentée propose des solutions multiplateformes de haute qualité, avec rapidité et précision.</p>
+            <p class="english">Maverca Solutions crafts multi-platform applications and real-time 3D experiences for sports and gaming. Behind Wahoo RGT and numerous console projects, our team delivers innovative, high-quality solutions.</p>
+            <p class="french">Maverca Solutions conçoit des applications multiplateformes et des expériences 3D en temps réel pour le sport et les jeux. À l'origine de Wahoo RGT et de nombreux projets sur consoles, notre équipe fournit des solutions innovantes et de haute qualité.</p>
             <div class="video-container full-width-video slide-in-right">
                 <iframe id="youtube-video" src="https://www.youtube.com/embed/xFwJKydc8Hk?autoplay=1&mute=1&controls=0&loop=1&playlist=xFwJKydc8Hk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -254,20 +297,20 @@
                 <div class="pop-in">
                     <h2 class="highlight-title english">.GAMERS</h2>
                     <h2 class="highlight-title french">.JOUEURS</h2>
-                    <p class="highlight-subtitle english">A team of passionate and highly skilled developers</p>
-                    <p class="highlight-subtitle french">Une équipe de développeurs passionnés et hautement qualifiés</p>
+                    <p class="highlight-subtitle english">Leveraging our game-crafting expertise to build superior apps</p>
+                    <p class="highlight-subtitle french">Utilisant notre expertise en création de jeux pour développer des applications de qualité supérieure</p>
                 </div>
                 <div class="pop-in">
                     <h2 class="highlight-title english">.SPORT SIM EXPERTS</h2>
                     <h2 class="highlight-title french">.EXPERTS EN SIMULATION SPORTIVE</h2>
-                    <p class="highlight-subtitle english">A leading force in endurance sport simulation for training and e-sport</p>
-                    <p class="highlight-subtitle french">Une force de premier plan dans la simulation de sports d'endurance pour l'entraînement et l'e-sport</p>
+                    <p class="highlight-subtitle english">Specialists in endurance sport simulations</p>
+                    <p class="highlight-subtitle french">Spécialistes des simulations de sports d'endurance</p>
                 </div>
                 <div class="pop-in">
                     <h2 class="highlight-title english">.SERIOUS</h2>
                     <h2 class="highlight-title french">.SÉRIEUX</h2>
-                    <p class="highlight-subtitle english">We build apps with a tech advantage</p>
-                    <p class="highlight-subtitle french">Nous développons des applications avec un avantage technologique</p>
+                    <p class="highlight-subtitle english">We build reliable, tech-driven apps</p>
+                    <p class="highlight-subtitle french">Nous créons des applications fiables et technologiques</p>
                 </div>
             </div>
         </section>
@@ -275,24 +318,24 @@
         <!-- What We Offer -->
         <section id="what-we-offer" class="mb-12 fade-in">
             <div class="mb-6">
-                <p class="english">We can develop your project in record time, ensuring top-tier quality and robust solutions for large-scale user bases across multiple platforms. Our services include:</p>
-                <p class="french">Nous pouvons développer votre projet en un temps record, garantissant une qualité de premier ordre et des solutions robustes pour des bases d'utilisateurs à grande échelle sur plusieurs plateformes. Nos services incluent :</p>
+                <p class="english">We develop high-quality projects quickly for multiple platforms, serving large user bases. Our services include:</p>
+                <p class="french">Nous développons des projets de haute qualité rapidement pour plusieurs plateformes, pour de larges bases d'utilisateurs. Nos services incluent :</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="offer-item slide-in-left">
-                    <div class="offer-img placeholder-img">Design</div>
-                    <p class="english">Our expertise in user experience (UX) design ensures intuitive and engaging interfaces. We collaborate closely with clients to craft the best user experience, leveraging decades of design experience to create visually stunning and functional solutions.</p>
-                    <p class="french">Notre expertise en conception d'expérience utilisateur (UX) garantit des interfaces intuitives et engageantes. Nous collaborons étroitement avec nos clients pour créer la meilleure expérience utilisateur, en tirant parti de décennies d'expérience en design pour offrir des solutions visuellement époustouflantes et fonctionnelles.</p>
+                   <img src="images/picto_Design.png" alt="Design"  class="offer-img">
+                    <p class="english">We design intuitive, user-friendly interfaces, working closely with clients to create engaging UX.</p>
+                    <p class="french">Nous concevons des interfaces intuitives et conviviales, en collaborant avec les clients pour créer une UX engageante.</p>
                 </div>
                 <div class="offer-item slide-in-up">
-                    <div class="offer-img placeholder-img">3D</div>
-                    <p class="english">We harness the power of cutting-edge game engines and the latest 3D technologies to deliver immersive, real-time environments. Our team excels in creating high-fidelity visuals and seamless interactions for games and simulations.</p>
-                    <p class="french">Nous exploitons la puissance des moteurs de jeu de pointe et des dernières technologies 3D pour offrir des environnements immersifs en temps réel. Notre équipe excelle dans la création de visuels haute fidélité et d'interactions fluides pour les jeux et les simulations.</p>
+                  <img src="images/picto_3D.png" alt="3D"  class="offer-img">
+                    <p class="english">We use advanced game engines to create immersive 3D environments for games and simulations.</p>
+                    <p class="french">Nous utilisons des moteurs de jeu avancés pour créer des environnements 3D immersifs pour les jeux et simulations.</p>
                 </div>
                 <div class="offer-item slide-in-right">
-                    <div class="offer-img placeholder-img">Hardware</div>
-                    <p class="english">Our solutions seamlessly integrate with hardware through technologies like Bluetooth and ANT+. We specialize in creating synergistic systems that enhance performance, ensuring robust connectivity and compatibility across devices.</p>
-                    <p class="french">Nos solutions s'intègrent parfaitement au matériel grâce à des technologies comme Bluetooth et ANT+. Nous nous spécialisons dans la création de systèmes synergiques qui améliorent les performances, garantissant une connectivité robuste et une compatibilité entre les appareils.</p>
+                   <img src="images/picto_Hardware.png" alt="Hardware"  class="offer-img">
+                    <p class="english">We integrate software with hardware using Bluetooth and ANT+ for reliable connectivity.</p>
+                    <p class="french">Nous intégrons logiciels et matériel avec Bluetooth et ANT+ pour une connectivité fiable.</p>
                 </div>
             </div>
         </section>
@@ -384,7 +427,7 @@
 
         <!-- They Trust Us -->
         <section id="they-trust-us" class="mb-20 fade-in">
-            <h2 class="english">They Trust Us</h2>
+            <h2 class="english">Who We've Worked With</h2>
             <h2 class="french">Ils Nous Font Confiance</h2>
             <div class="trust-grid">
                 <div class="trust-img slide-in-up"><img src="images/partners/Wahoo_Logo.png" alt="Wahoo"></div>
@@ -400,20 +443,12 @@
             </div>
         </section>
 
-        <!-- Hire Us -->
-        <section id="hire-us" class="mb-12 fade-in">
-            <h2 class="english">Hire Us</h2>
-            <h2 class="french">Engagez-Nous</h2>
-            <p class="english">Maverca Solutions is available to transform your vision into reality. Let us build your next groundbreaking project with speed, precision, and excellence.</p>
-            <p class="french">Maverca Solutions est disponible pour transformer votre vision en réalité. Laissez-nous construire votre prochain projet révolutionnaire avec rapidité, précision et excellence.</p>
-        </section>
-
         <!-- Contact Us -->
         <section id="contact-us" class="fade-in">
             <h2 class="english">Contact Us</h2>
             <h2 class="french">Contactez-Nous</h2>
-            <p class="english">Reach out to discuss your project: <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a></p>
-            <p class="french">Contactez-nous pour discuter de votre projet : <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a></p>
+            <p class="english">Ready to start your project? Email us at <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a> to discuss how we can help.</p>
+            <p class="french">Prêt à démarrer votre projet ? Envoyez-nous un email à <a href="mailto:mavercasolutions@gmail.com" class="hover:underline">mavercasolutions@gmail.com</a> pour discuter de vos besoins.</p>
         </section>
     </main>
 
